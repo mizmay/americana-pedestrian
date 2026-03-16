@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trip Planning — PWG Pedestrian Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { display: flex; flex-direction: column; height: 100vh; font-family: system-ui, sans-serif; }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 1rem;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      flex-shrink: 0;
+    }
+    header a { color: #555; font-size: 0.875rem; text-decoration: none; }
+    header a:hover { text-decoration: underline; }
+    header h1 { font-size: 1rem; font-weight: 600; }
+    #map { flex: 1; }
+    #legend {
+      position: absolute;
+      bottom: 2rem;
+      left: 1rem;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      pointer-events: none;
+    }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; }
+    .swatch {
+      width: 28px;
+      height: 4px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .swatch.dashed {
+      background: repeating-linear-gradient(
+        to right,
+        currentColor 0, currentColor 4px,
+        transparent 4px, transparent 8px
+      );
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="../">← All styles</a>
+    <h1>Trip Planning</h1>
+  </header>
+  <div id="map"></div>
+  <div id="legend">
+    <div class="legend-item"><span class="swatch" style="background:hsl(0,0%,80%);"></span> Paved</div>
+    <div class="legend-item"><span class="swatch" style="background: repeating-linear-gradient(to right, rgb(177,194,180) 0, rgb(177,194,180) 4px, transparent 4px, transparent 8px);"></span> Unpaved</div>
+    <div class="legend-item"><span class="swatch" style="background: repeating-linear-gradient(to right, rgba(103,118,110,1) 0, rgba(103,118,110,1) 4px, transparent 4px, transparent 8px);"></span> Steps</div>
+  </div>
+
+  <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
+  <script>
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: '../styles/americana-pedestrian-trip-planning.json',
+      center: [-122.335, 47.608],  // Seattle
+      zoom: 14,
+      hash: true
+    });
+
+    map.addControl(new maplibregl.NavigationControl(), 'top-right');
+    map.addControl(new maplibregl.ScaleControl({ unit: 'imperial' }), 'bottom-right');
+    map.addControl(new maplibregl.GeolocateControl({
+      positionOptions: { enableHighAccuracy: true },
+      trackUserLocation: true
+    }), 'top-right');
+  </script>
+</body>
+</html>
