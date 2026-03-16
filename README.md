@@ -61,6 +61,12 @@ Shields and icons (e.g. for POIs) do not work on this version of the Americana m
 
 ---
 
+## Live Demo
+
+**https://mizmay.github.io/americana-pedestrian/trip_planning/**
+
+---
+
 ## View Locally
 
 ```bash
